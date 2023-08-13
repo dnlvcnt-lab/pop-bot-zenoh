@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+  pop-bot:
+    build:
+      context: ./src
+    image: localhost/pop-bot
+    tty: true
+    network_mode: host
+    shm_size: 1gb
+    ipc: host
+    environment:
+    - DISPLAY=$DISPLAY
+    volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix
+    - ./workspace:/home/system/workspace:z
