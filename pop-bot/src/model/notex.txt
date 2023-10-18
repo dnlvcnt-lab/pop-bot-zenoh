@@ -1,0 +1,12 @@
+base:
+  cylinder
+  r = 75 mm
+  h = 02 mm
+wheels:
+  cylinder
+  r = 35 mm
+  h = 10 mm
+caster wheels:
+  sphere
+  r = 11.25 mm
+
