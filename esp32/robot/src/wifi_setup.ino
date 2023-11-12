@@ -1,15 +1,7 @@
-#include <Arduino.h>
-#include <wifi_setup.h>
+#include <wifi/wifi_setup.h>
 
-void connect_wifi()
+void connectWifi()
 {
-    // Initialize Serial for debug
-    Serial.begin(9600);
-    while (!Serial)
-    {
-        delay(1000);
-    }
-
     Serial.print("Trying to connect in ");
     Serial.print(SSID);
     Serial.print(" ...\n");

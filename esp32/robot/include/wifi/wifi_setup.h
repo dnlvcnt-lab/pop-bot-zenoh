@@ -8,6 +8,6 @@
 #define SSID ""
 #define PASS ""
 
-void connect_wifi();
+void connectWifi();
 
-#endif
+#endif // WIFI_SETUP_H
