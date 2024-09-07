@@ -1,19 +1,28 @@
 #include <Arduino.h>
 #include <wifi/wifi_setup.h>
 #include <zenoh/zenoh_setup.h>
+#include <status/status.h>
 #include <sensors/bumper.h>
 
 #define MODE "peer"
-#define CONNECT "udp/224.0.0.224:7446#iface=wlp0s20f3"
+#define CONNECT "udp/224.0.0.224:7447#iface=wlp0s20f3"
 
+#define KEY_STATUS "rt/popbot/status"
 #define KEY_BUMPER_A "rt/popbot/bumperA"
 
 // Zenoh Session
 ZenohSession zenoh(MODE, CONNECT);
 
+// Status
+Status robotStatus;
+
 // Sensors
-//// Bumper
-Bumper bumperA(2); // Pin 2
+
+/* Bumper
+    - ID:   A
+    - Pin:  2   
+*/
+Bumper bumperA(2);
 
 
 void setup() {
@@ -34,6 +43,10 @@ void setup() {
     // Open Zenoh Session
     zenoh.openSession();
 
+    // Status Configuration
+    robotStatus.assignSession(zenoh.znhSession);
+    robotStatus.declarePublisher(KEY_STATUS);
+
     // Bumper Configuration
     bumperA.assignSession(zenoh.znhSession);
     bumperA.declarePublisher(KEY_BUMPER_A);
@@ -41,8 +54,12 @@ void setup() {
 }
 
 void loop() {
+    // Status
+    robotStatus.pubMsg();
+    delay(5000);
+
     // Publish Bumper A
-    bumperA.pubMsg();
-    delay(1000);
-    //Serial.println(zenoh1.ledPin);
+    //bumperA.pubMsg();
+    //delay(2000);
+
 }
