@@ -9,18 +9,17 @@
 
 class Bumper {
     private:
-        int sensorPin;
+        uint8_t sensorPin;
         int sensorState;
         String topic;
         BoolMsg sensorMeasure;
         z_owned_session_t znhSession;
-        z_owned_publisher_t sensorPub;
         void createMsg(char *buf);
         void readSensor();
         
     public:
-        
-        Bumper(int pin);
+        Bumper(uint8_t pin);
+        z_owned_publisher_t sensorPub;
         void displayInfo();
         int getState();
         void assignSession(z_owned_session_t session);

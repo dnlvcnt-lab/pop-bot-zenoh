@@ -1,7 +1,8 @@
 #include <sensors/bumper.h>
 
-Bumper::Bumper(int pin) {
+Bumper::Bumper(uint8_t pin) {
     sensorPin = pin;
+    pinMode(sensorPin, INPUT);
 }
 
 void Bumper::readSensor() {
@@ -17,6 +18,7 @@ void Bumper::displayInfo() {
 }
 
 int Bumper::getState() {
+    readSensor();
     return sensorState;
 }
 
@@ -27,13 +29,12 @@ void Bumper::assignSession(z_owned_session_t session) {
 void Bumper::declarePublisher(String keyExpr) {
     topic = keyExpr;
     Serial.print("Declaring publisher for ");
-    Serial.print(topic);
+    Serial.print(topic.c_str());
     Serial.println("...");
     sensorPub = z_declare_publisher(z_session_loan(&znhSession), z_keyexpr(topic.c_str()), NULL);
     if (!z_publisher_check(&sensorPub))
     {
-        Serial.println("Unable to declare publisher for key expression!\n");
-        Serial.println(topic);
+        Serial.println("Unable to declare publisher.");
         while (1)
             ;
     }
